@@ -1,0 +1,112 @@
+##
+## Copyright (c) 2023 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+##
+## NVIDIA CORPORATION, its affiliates and licensors retain all intellectual
+## property and proprietary rights in and to this material, related
+## documentation and any modifications thereto. Any use, reproduction,
+## disclosure or distribution of this material and related documentation
+## without an express license agreement from NVIDIA CORPORATION or
+## its affiliates is strictly prohibited.
+##
+
+robot_cfg:
+  kinematics:
+    usd_path: null
+    usd_robot_root: "/robot"
+    isaac_usd_path: ""
+    usd_flip_joints: {}
+    usd_flip_joint_limits: []
+
+    urdf_path: "robot/ur5_leap_classic/ur5_leap_classic.urdf"
+    asset_root_path: "robot/ur5_leap_classic"
+    
+    base_link: "arm_base_link"
+    ee_link: "rh_palm_lower"
+    link_names: ["rh_fingertip_1", "rh_fingertip_2", "rh_fingertip_3", "rh_thumb_fingertip"]
+    # lock_joints: {}
+    lock_joints: {
+      "rh_joint_0": 0.0, "rh_joint_1": 0.5, "rh_joint_2": 0.0, "rh_joint_3": 0.0,
+      "rh_joint_4": 0.0, "rh_joint_5": 0.5, "rh_joint_6": 0.0, "rh_joint_7": 0.0,
+      "rh_joint_8": 0.0, "rh_joint_9": 0.5, "rh_joint_10": 0.0, "rh_joint_11": 0.0,
+      "rh_joint_12": 1.7, "rh_joint_13": 0.0, "rh_joint_14": -0.5, "rh_joint_15": 0.0,
+    }
+    extra_links: null
+    
+    collision_link_names: [
+      'arm_shoulder_link','arm_upper_arm_link', 'arm_forearm_link', 'arm_wrist_1_link', 'arm_wrist_2_link' ,'arm_wrist_3_link', 
+      'rh_palm_lower', 'rh_mcp_joint', 'rh_pip', 'rh_dip', 'rh_fingertip_1', 'rh_mcp_joint_2', 'rh_pip_2', 'rh_dip_2', 'rh_fingertip_2', 'rh_mcp_joint_3', 'rh_pip_3', 'rh_dip_3', 'rh_fingertip_3', 'rh_pip_4', 'rh_thumb_dip', 'rh_thumb_fingertip'
+    ] # List[str]
+    collision_spheres: spheres/ur5_leap.yml
+
+    collision_sphere_buffer: 0.0
+    extra_collision_spheres: {}
+    self_collision_ignore: {
+      "arm_shoulder_link": ["arm_tool0"],
+      "arm_upper_arm_link": ["arm_forearm_link", "arm_shoulder_link", "arm_tool0"],
+      "arm_forearm_link": ["arm_wrist_1_link"],
+      "arm_wrist_1_link": ["arm_wrist_2_link","arm_wrist_3_link","arm_tool0"],
+      "arm_wrist_2_link": ["arm_wrist_3_link", "arm_tool0"],
+      "arm_wrist_3_link": ["arm_tool0", "rh_palm_lower"],
+      'rh_palm_lower' : ['rh_mcp_joint', 'rh_mcp_joint_2', 'rh_mcp_joint_3', 'rh_pip_4', 'rh_thumb_dip'],
+      'rh_mcp_joint' : ['rh_pip'],
+      'rh_pip' : ['rh_dip'],
+      'rh_dip' : ['rh_fingertip_1'],
+      'rh_fingertip_1' : [],
+      'rh_mcp_joint_2' : ['rh_pip_2'],
+      'rh_pip_2': ['rh_dip_2'],
+      'rh_dip_2' : ['rh_fingertip_2'],
+      'rh_fingertip_2' : [],
+      'rh_mcp_joint_3' : ['rh_pip_3'],
+      'rh_pip_3' : ['rh_dip_3'], 
+      'rh_dip_3' : ['rh_fingertip_3'],
+      'rh_fingertip_3' : [],
+      'rh_pip_4' : ['thumb_dip'],
+      'rh_thumb_dip' : ['rh_thumb_fingertip'],
+      'rh_thumb_fingertip' : [],
+    }
+    self_collision_buffer: {'arm_upper_arm_link': 0, 
+      'arm_forearm_link': 0, 
+      'arm_wrist_1_link': 0, 
+      'arm_wrist_2_link': 0,
+      'arm_wrist_3_link' : 0,
+      'arm_tool0': 0.025,
+    } 
+      
+    use_global_cumul: True
+    mesh_link_names:  [
+      'arm_shoulder_link','arm_upper_arm_link', 'arm_forearm_link', 'arm_wrist_1_link', 'arm_wrist_2_link' ,'arm_wrist_3_link',
+      'rh_palm_lower', 'rh_mcp_joint', 'rh_pip', 'rh_dip', 'rh_fingertip_1', 'rh_mcp_joint_2', 'rh_pip_2', 'rh_dip_2', 'rh_fingertip_2', 'rh_mcp_joint_3', 'rh_pip_3', 'rh_dip_3', 'rh_fingertip_3', 'rh_pip_4', 'rh_thumb_dip', 'rh_thumb_fingertip'  
+    ] # List[str]
+
+    cspace:
+      joint_names: [
+        'arm_shoulder_pan_joint', 'arm_shoulder_lift_joint', 'arm_elbow_joint', 'arm_wrist_1_joint', 'arm_wrist_2_joint', 'arm_wrist_3_joint',
+        # 'rh_joint_1', 'rh_joint_0', 'rh_joint_2', 'rh_joint_3',
+        # 'rh_joint_5', 'rh_joint_4', 'rh_joint_6', 'rh_joint_7',
+        # 'rh_joint_9', 'rh_joint_8', 'rh_joint_10', 'rh_joint_11',
+        # 'rh_joint_12', 'rh_joint_13', 'rh_joint_14', 'rh_joint_15',
+      ]
+      retract_config:  [
+        2.834, -2.4, -1.39, -0.441, 1.215, -0.454,
+        # 0.0, 0.0, 0.0, 0.0,
+        # 0.0, 0.0, 0.0, 0.0,
+        # 0.0, 0.0, 0.0, 0.0,
+        # 0.0, 0.0, 0.0, 0.0
+      ]
+      null_space_weight:  [
+        1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+        # 1.0, 1.0, 1.0, 1.0,
+        # 1.0, 1.0, 1.0, 1.0,
+        # 1.0, 1.0, 1.0, 1.0,
+        # 1.0, 1.0, 1.0, 1.0
+      ]
+      cspace_distance_weight: [
+        1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+        # 1.0, 1.0, 1.0, 1.0,
+        # 1.0, 1.0, 1.0, 1.0,
+        # 1.0, 1.0, 1.0, 1.0,
+        # 1.0, 1.0, 1.0, 1.0
+      ]
+      max_jerk: 500.0
+      max_acceleration: 12.0
+      position_limit_clip: 0.1

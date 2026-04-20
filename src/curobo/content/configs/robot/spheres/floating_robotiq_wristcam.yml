@@ -1,0 +1,84 @@
+# The robot description defines the generalized coordinates and how to map those
+# to the underlying URDF dofs.
+
+api_version: 1.0
+
+# Defines the generalized coordinates. Each generalized coordinate is assumed
+# to have an entry in the URDF.
+# Lula will only use these joints to control the robot position.
+cspace:
+    - root_x_axis_joint
+    - root_y_axis_joint
+    - root_z_axis_joint
+    - root_x_rot_joint
+    - root_y_rot_joint
+    - root_z_rot_joint
+    - left_inner_knuckle_joint
+    - left_outer_knuckle_joint
+    - right_inner_knuckle_joint
+    - right_outer_knuckle_joint
+    - left_inner_finger_joint
+    - right_inner_finger_joint
+default_q: [
+    -0.0,0.0,-0.0166,1e-04,0.0007,0.0,0.0,0.0,0.0,0.0,-0.0,0.0
+]
+
+acceleration_limits: [
+   10,10,10,10,10,10,10,10,10,10,10,10
+]
+
+jerk_limits: [
+   10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000
+]
+
+# Most dimensions of the cspace have a direct corresponding element
+# in the URDF. This list of rules defines how unspecified coordinates
+# should be extracted or how values in the URDF should be overwritten.
+
+cspace_to_urdf_rules:
+
+# Lula uses collision spheres to define the robot geometry in order to avoid
+# collisions with external obstacles.  If no spheres are specified, Lula will
+# not be able to avoid obstacles.
+
+collision_spheres:
+    robotiq_arg2f_base_link:
+        - "center": [0.0, 0.0, 0.04]
+          "radius": 0.045
+    left_outer_finger:
+        - "center": [0.0, 0.0, 0.0]
+          "radius": 0.012
+        - "center": [0.0, 0.005, 0.02]
+          "radius": 0.012
+    right_inner_finger:
+        - "center": [0.0, 0.0, 0.0]
+          "radius": 0.012
+        - "center": [0.0, -0.02, 0.03]
+          "radius": 0.012
+    right_outer_finger:
+        - "center": [0.0, 0.0, 0.0]
+          "radius": 0.012
+        - "center": [0.0, 0.005, 0.02]
+          "radius": 0.012
+    left_inner_finger:
+        - "center": [0.0, -0.02, 0.03]
+          "radius": 0.012
+        - "center": [0.0, 0.0, 0.0]
+          "radius": 0.012
+    left_inner_knuckle:
+        - "center": [0.0, 0.03, 0.03]
+          "radius": 0.012
+    right_inner_knuckle:
+        - "center": [0.0, 0.03, 0.03]
+          "radius": 0.012
+    camera_link:
+        - "center": [-0.01, 0.02, 0.0]
+          "radius": 0.01
+        - "center": [-0.01, 0.0, 0.0]
+          "radius": 0.01
+        - "center": [-0.01, -0.02, 0.0]
+          "radius": 0.01
+        - "center": [-0.01, -0.04, 0.0]
+          "radius": 0.01
+        - "center": [-0.01, -0.06, 0.0]
+          "radius": 0.01

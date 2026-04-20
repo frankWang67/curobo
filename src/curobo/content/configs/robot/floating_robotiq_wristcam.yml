@@ -1,0 +1,59 @@
+##
+## Copyright (c) 2023 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+##
+## NVIDIA CORPORATION, its affiliates and licensors retain all intellectual
+## property and proprietary rights in and to this material, related
+## documentation and any modifications thereto. Any use, reproduction,
+## disclosure or distribution of this material and related documentation
+## without an express license agreement from NVIDIA CORPORATION or
+## its affiliates is strictly prohibited.
+##
+
+robot_cfg:
+  kinematics:
+    usd_path: "robot/robotiq_gripper_robots/robotiq_2f/floating_robotiq_2f_85_wristcam.usd"
+    usd_robot_root: "/robot"
+    isaac_usd_path: ""
+    usd_flip_joints: {}
+    usd_flip_joint_limits: []
+
+    urdf_path: "robot/robotiq_gripper_robots/robotiq_2f/floating_robotiq_2f_85_wristcam.urdf"
+    asset_root_path: "robot/robotiq_gripper_robots/robotiq_2f"
+    
+    base_link: "root"
+    ee_link: "eef"
+    link_names: null
+    lock_joints: null
+    extra_links: null
+
+    
+    collision_link_names: ["robotiq_arg2f_base_link", "left_outer_finger", "left_inner_finger", "left_inner_knuckle", "right_outer_finger", "right_inner_finger", "right_inner_knuckle", "camera_link"] # List[str]
+    collision_spheres: "spheres/floating_robotiq_wristcam.yml" #
+    collision_sphere_buffer: 0.005 # float or Dict[str, float]
+    extra_collision_spheres: {}
+    self_collision_ignore: {
+      "robotiq_arg2f_base_link": ["left_outer_finger", "left_inner_finger", "left_inner_knuckle", "right_outer_finger", "right_inner_finger", "right_inner_knuckle"],
+      "left_outer_finger": ["robotiq_arg2f_base_link", "left_inner_finger", "left_inner_knuckle", "right_outer_finger", "right_inner_finger", "right_inner_knuckle"],
+      "left_inner_finger": ["robotiq_arg2f_base_link", "left_outer_finger", "left_inner_knuckle", "right_outer_finger", "right_inner_finger", "right_inner_knuckle"],
+      "left_inner_knuckle": ["robotiq_arg2f_base_link", "left_outer_finger", "left_inner_finger", "right_outer_finger", "right_inner_finger", "right_inner_knuckle"],
+      "right_outer_finger": ["robotiq_arg2f_base_link", "left_outer_finger", "left_inner_finger", "left_inner_knuckle", "right_inner_finger", "right_inner_knuckle"],
+      "right_inner_finger": ["robotiq_arg2f_base_link", "left_outer_finger", "left_inner_finger", "left_inner_knuckle", "right_outer_finger", "right_inner_knuckle"],
+      "right_inner_knuckle": ["robotiq_arg2f_base_link", "left_outer_finger", "left_inner_finger", "left_inner_knuckle", "right_outer_finger", "right_inner_finger"],
+    } # Dict[str, List[str]]
+    self_collision_buffer: {} # Dict[str, float]
+
+    use_global_cumul: True
+    mesh_link_names: ["robotiq_arg2f_base_link", "left_outer_knuckle", "left_outer_finger", "left_inner_finger", "left_inner_knuckle", "right_outer_knuckle", "right_outer_finger", "right_inner_finger", "right_inner_knuckle", "camera_link"] # List[str]
+    external_asset_path: null # Use this to add path for externally located assets/robot folder.
+
+    cspace:
+      joint_names: ["root_x_axis_joint", "root_y_axis_joint", "root_z_axis_joint", "root_x_rot_joint", "root_y_rot_joint", "root_z_rot_joint", 
+                    "left_outer_knuckle_joint", "left_inner_knuckle_joint", "left_inner_finger_joint", "right_outer_knuckle_joint", "right_inner_knuckle_joint", "right_inner_finger_joint"] # List[str]
+      retract_config: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 
+                       0.0, 0.0, 0.0, 0.0, 0.0, 0.0] # List[float]
+      null_space_weight: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 
+                          1.0, 1.0, 1.0, 1.0, 1.0, 1.0] # List[str]
+      cspace_distance_weight: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 
+                               1.0, 1.0, 1.0, 1.0, 1.0, 1.0] # List[str]
+      max_jerk: 500.0
+      max_acceleration: 15.0
